@@ -1,4 +1,4 @@
-import Pacman from "./Pacman";
+import Pacman from "./Pacman.js";
 
 const canvas = document.getElementById('ctx');
 const width =  ( window.innerWidth / 1.5);
