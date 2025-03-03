@@ -52,10 +52,10 @@ class Pacman{
     move(e){
         let newPos = this.playerPosition;
         let clicked = 0;
-        if(e == "ArrowUp" || e == "KeyW" && clicked == 0 && !this.map[newPos - 19].walls && Math.floor(newPos - 19) >= 0) clicked++, newPos -= 19;
-        else if(e == "ArrowDown" || e == "KeyS" && clicked == 0 && !this.map[newPos + 19].walls && newPos + 19 < gameMap.length) clicked++, newPos += 19;
-        else if(e == "ArrowLeft" || e == "KeyA" && clicked == 0 && !this.map[newPos - 1].walls && Math.floor(newPos % 19) != 0) clicked++, newPos -= 1;
-        else if(e == "ArrowRight" || e == "KeyD" && clicked == 0 && !this.map[newPos + 1].walls && Math.floor((newPos + 1) % 19) != 0) clicked++, newPos += 1;
+        if(e == "KeyW" && clicked == 0 && !this.map[newPos - 19].walls && Math.floor(newPos - 19) >= 0) clicked++, newPos -= 19;
+        else if(e == "KeyS" && clicked == 0 && !this.map[newPos + 19].walls && newPos + 19 < gameMap.length) clicked++, newPos += 19;
+        else if(e == "KeyA" && clicked == 0 && !this.map[newPos - 1].walls && Math.floor(newPos % 19) != 0) clicked++, newPos -= 1;
+        else if(e == "KeyD" && clicked == 0 && !this.map[newPos + 1].walls && Math.floor((newPos + 1) % 19) != 0) clicked++, newPos += 1;
         this.playerPosition = newPos;
         clicked = 0;
         this.map[this.playerPosition].walls = false;
