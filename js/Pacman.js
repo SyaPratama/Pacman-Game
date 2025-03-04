@@ -12,6 +12,7 @@ class Pacman{
         this.arrayStartPoint = [];
         this.startPosition = 0;
         this.playerPosition = 0;
+        this.score = 0;
         this.cellSize = Math.floor(Math.min(this.width / this.cols, this.height / this.rows));
     }
 
@@ -79,12 +80,14 @@ class Pacman{
         else if(e == "KeyD" && clicked == 0 && !this.map[newPos + 1].walls && Math.floor((newPos + 1) % 19) != 0) clicked++, newPos += 1;
         this.playerPosition = newPos;
         this.fruit.find((f,i) => {
-            if(f.x == this.map[this.playerPosition].x && f.y == this.map[this.playerPosition].y){
+            if(f.x == this.map[this.playerPosition].x && f.y == this.map[this.playerPosition].y && !f.eat){
                 this.fruit[i].eat = true;
+                this.score++;
             }
         })
         clicked = 0;
         this.render();
+        console.log(this.score);
     }
 
     start(){
