@@ -8,6 +8,7 @@ class Pacman{
         this.width = width;
         this.height = height;
         this.map = [];
+        this.fruit = [];
         this.arrayStartPoint = [];
         this.startPosition = 0;
         this.playerPosition = 0;
@@ -35,6 +36,20 @@ class Pacman{
         this.playerPosition = this.startPosition;
     }
 
+    generateFruit()
+    {
+        return this.map.forEach((n) => {
+            if(!n.walls && !n.playerPosition)
+            {
+                this.fruit.push({
+                    x:n.x,
+                    y:n.y,
+                    eat: false,
+                });
+            }
+        });
+    }
+
     randomPositionPlayer()
     {
         return this.arrayStartPoint[Math.floor(Math.random() * this.arrayStartPoint.length)];
@@ -47,6 +62,12 @@ class Pacman{
             this.ctx.fillStyle = n.walls && !n.playerPosition ? 'blue' : this.playerPosition  == i ? 'yellow' :  'gray';
             this.ctx.fillRect(n.x,n.y,this.cellSize,this.cellSize);
         });
+        this.fruit.forEach(f => {
+            if(!f.eat){
+                this.ctx.fillStyle = "red";
+                this.ctx.fillRect(f.x + 5,f.y + 5,this.cellSize / 3,this.cellSize / 3);
+            }
+        })
     }
 
     move(e){
@@ -57,13 +78,18 @@ class Pacman{
         else if(e == "KeyA" && clicked == 0 && !this.map[newPos - 1].walls && Math.floor(newPos % 19) != 0) clicked++, newPos -= 1;
         else if(e == "KeyD" && clicked == 0 && !this.map[newPos + 1].walls && Math.floor((newPos + 1) % 19) != 0) clicked++, newPos += 1;
         this.playerPosition = newPos;
+        this.fruit.find((f,i) => {
+            if(f.x == this.map[this.playerPosition].x && f.y == this.map[this.playerPosition].y){
+                this.fruit[i].eat = true;
+            }
+        })
         clicked = 0;
-        this.map[this.playerPosition].walls = false;
         this.render();
     }
 
     start(){
         this.generateMap();
+        this.generateFruit();
         this.render();
     }
 }
